@@ -6,13 +6,47 @@
 //
 
 import Foundation
+import CoreLocation
 
-struct Road {
+struct Time {
+    var hours: Int
+    var minutes: Int
+    var seconds: Int
+}
+
+struct Road: Identifiable {
+    let id = UUID()
     let headerImage: String
     let name: String
     let length: Int
     let jobTitle: String
+    let bestTime: Time
+    let startCoordinate: CLLocationCoordinate2D
+    let endCoordinate: CLLocationCoordinate2D
+    
+    var formattedBestTime: String {
+       let hours = bestTime.hours > 0 ? "\(bestTime.hours)h " : ""
+       let minutes = bestTime.minutes > 0 || bestTime.hours > 0 ? "\(bestTime.minutes)m " : ""
+       let seconds = "\(bestTime.seconds)s"
+       return hours + minutes + seconds
+    }
 }
 
-let road1 = Road(headerImage: "limecreek", name: "Lime Creek", length: 9, jobTitle: "Long Technical Road")
-let road2 = Road(headerImage: "oldspicewood", name: "Old Spicewood", length: 3, jobTitle: "Short Joy Ride")
+let roadData = [
+    Road(headerImage: "limecreek",
+         name: "Lime Creek",
+         length: 9,
+         jobTitle: "Thrilling Twists & Turns",
+         bestTime: Time(hours: 0, minutes: 15, seconds: 30),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.44302, longitude: -97.91162),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.48984, longitude: -97.86139)
+        ),
+    Road(headerImage: "oldspicewood",
+         name: "Old Spicewood",
+         length: 3,
+         jobTitle: "Short & Sweet",
+         bestTime: Time(hours: 0, minutes: 5, seconds: 45),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.4218, longitude: -97.79456),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.38346, longitude: -97.77156)
+        )
+]

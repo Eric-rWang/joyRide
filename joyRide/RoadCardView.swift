@@ -19,54 +19,72 @@ struct RoadCardView: View {
                     .frame(height: 120)
                     .clipped()
             }
-            .overlay(alignment: .topLeading) {
-                
-            }
-            .overlay(alignment: .topTrailing) {
-                Button {
-                    // ?
-                } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .foregroundStyle(.gray)
-                        .padding(6)
-                }
-            }
             
             HStack {
-                HStack {
-                    Text(road.name)
-                        .fontWeight(.bold)
-                    
-                    Text("· \(road.length) miles")
-                        .foregroundStyle(.gray)
+                VStack {
+                    HStack {
+                        Text(road.name)
+                            .fontWeight(.bold)
+                            .font(.custom("MyCustomFont", size: 16))
+                            .foregroundStyle(Color(
+                                red: 0.95,
+                                green: 0.95,
+                                blue: 0.95)
+                            )
+                        
+                        Text("· \(road.length) mi")
+                            .font(.custom("MyCustomFont", size: 14))
+                            .foregroundStyle(Color(
+                                red: 0.75,
+                                green: 0.75,
+                                blue: 0.75)
+                            )
+                    }
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                    Text(road.jobTitle)
+                        .frame(maxWidth: .infinity, alignment: .topLeading)
+                        .font(.custom("MyCustomFont", size: 14))
+                        .padding(.vertical, 0.1)
+                        .foregroundStyle(Color(
+                            red: 0.85,
+                            green: 0.85,
+                            blue: 0.85)
+                        )
                 }
-                .frame(maxWidth: .infinity, alignment: .topLeading)
                 .padding()
                 
-                Button {
-                    // ?
-                } label: {
-                    Text("Start Tracking")
-                        .padding(.vertical, 4)
-                        .foregroundStyle(.gray)
+                VStack {
+                    Text("Personal Best")
+                        .font(.custom("MyCustomFont", size: 16))
+                        .foregroundStyle(Color(
+                            red: 0.85,
+                            green: 0.85,
+                            blue: 0.85)
+                        )
                         .padding(.horizontal)
-                        .overlay {
-                            Capsule()
-                                .stroke(lineWidth: 2)
-                                .foregroundStyle(.gray)
-                        }
+                    Text("\(road.formattedBestTime)")
+                        .font(.custom("MyCustomFont", size: 18))
+                        .foregroundStyle(Color(
+                            red: 0.85,
+                            green: 0.85,
+                            blue: 0.85)
+                        )
+                        .padding(.horizontal)
                 }
-                .frame(maxWidth: .infinity, alignment: .topTrailing)
+                .frame(alignment: .topTrailing)
                 .padding()
             }
         }
+        .background(Color(red: 0.35, green: 0.40, blue: 0.40))
+        .cornerRadius(14)
     }
 }
 
 struct RoadCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RoadCardView(road: road1)
+        RoadCardView(road: roadData[0])
             .previewLayout(.sizeThatFits)
+            .padding()
     }
 }
 
