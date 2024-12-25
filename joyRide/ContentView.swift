@@ -9,13 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        VStack(alignment: .leading, spacing: 8) {
+            Text("joyRide")
+                .font(.system(size: 24, weight: .bold))
+                .padding(.top, 16)
+            
+            Text("Roads currently available")
+                .font(.system(size: 18))
+            
+            Spacer()
         }
-        .padding()
+        .padding(.horizontal, 16)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
