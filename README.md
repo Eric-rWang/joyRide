@@ -62,34 +62,19 @@ Welcome to the **Sim World to Real World** app! This application bridges the gap
 ## Roadmap
 Future features include:
 - **AR Enhancements:** Visualize routes using augmented reality overlays.
-- **Multiplayer Mode:** Compete with friends in real-time.
+- **Multiplayer Mode:** Compete with friends in real time.
 - **Integration with Wearables:** Sync with smartwatches and fitness bands for enhanced data collection.
 - **Offline Mode:** Save tracks and data for use in areas with limited connectivity.
 
 ---
 
-## Contributing
-We welcome contributions to improve the app! Here's how you can help:
-1. Fork the repository.
-2. Create a branch for your feature or bug fix.
-3. Commit your changes and submit a pull request.
-4. Engage with our team for feedback and discussions.
-
----
-
 ## Support
-For any issues, questions, or feature requests, please contact us at **support@simworldapp.com**.
+Please contact us at nowhere rn for any issues, questions, or feature requests.
 
 ---
 
 ## License
 This project is licensed under the MIT License. See the LICENSE file for details.
-
----
-
-## Acknowledgements
-- **Apple Maps API** for providing robust mapping capabilities.
-- **Our Beta Testers** for valuable feedback and insights.
 
 ---
 
