@@ -97,18 +97,30 @@ struct RoadMapView: View {
                     Spacer()
                     
                     // Start Engine button
-                    NavigationLink(destination: Text("Timer Page")) {
-                        HStack {
-                            Image(systemName: "gauge.with.dots.needle.bottom")
-                            Text("START ENGINE")
-                        }
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding()
-                        .background(Color(red: 0.94, green: 0.1, blue: 0.176))
-                        .cornerRadius(14)
+                    NavigationLink(destination: TimerView(road: road)) {
+                        Text("ENGINE\nSTART")
+                            .font(.system(size: 18, weight: .bold))
+                            .multilineTextAlignment(.center)
+                            .foregroundStyle(.white)
+                            .frame(width: 100, height: 100)
+                            .background(
+                                Circle()
+                                    .fill(Color(red: 0.94, green: 0.1, blue: 0.176))
+                                    .shadow(color: .black.opacity(0.4), radius: 5, x: 0, y: 2)
+                            )
+                            .overlay(
+                                Circle()
+                                    .stroke(Color.white.opacity(0.1), lineWidth: 2)
+                                    .overlay(
+                                        Circle()
+                                            .stroke(Color.black.opacity(0.2), lineWidth: 4)
+                                            .blur(radius: 2)
+                                            .offset(y: 2)
+                                    )
+                            )
+                            .padding(.bottom, 30)
                     }
+
                 }
                 .padding()
             }
