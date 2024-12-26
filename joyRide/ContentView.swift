@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
+    let manager = CLLocationManager()
+    
     var body: some View {
         RoadListView()
+            .onAppear {
+                manager.requestWhenInUseAuthorization()
+            }
     }
 }
 
