@@ -14,6 +14,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var onStartCross: (() -> Void)?
     @Published var onFinishCross: (() -> Void)?
     @Published var currentSpeed: Double = 0
+    @Published var onSectionCheck: ((CLLocation) -> Void)?
     var startCoordinate: CLLocationCoordinate2D
     var endCoordinate: CLLocationCoordinate2D
     
@@ -24,25 +25,28 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.last else { return }
-        onLocationUpdate?(location)
-        
-        // Get speed in meters per second and convert to mph
-        let speedMPS = location.speed
-        if speedMPS > 0 {
-            currentSpeed = speedMPS * 2.23694 // Convert m/s to mph
-        }
-
-        // Check if user crossed start line
-        let startDistance = location.coordinate.distance(to: startCoordinate)
-        if startDistance < 10 { // 10 meters threshold
-            onStartCross?()
-        }
-        
-        // Check if user crossed finish line
-        let finishDistance = location.coordinate.distance(to: endCoordinate)
-        if finishDistance < 10 { // 10 meters threshold
-            onFinishCross?()
+            guard let location = locations.last else { return }
+            onLocationUpdate?(location)
+            
+            // Speed calculation
+            let speedMPS = location.speed
+            if speedMPS > 0 {
+                currentSpeed = speedMPS * 2.23694
+            }
+            
+            // Start line check
+            let startDistance = location.coordinate.distance(to: startCoordinate)
+            if startDistance < 10 {
+                onStartCross?()
+            }
+            
+            // Section check
+            onSectionCheck?(location)
+            
+            // Finish line check
+            let finishDistance = location.coordinate.distance(to: endCoordinate)
+            if finishDistance < 10 {
+                onFinishCross?()
         }
     }
 }
@@ -107,11 +111,9 @@ struct TimerView: View {
     }
     
     var formattedTime: String {
-        guard let start = startDate else { return "00:00.00" }
-        let elapsed = Date().timeIntervalSince(start)
-        let minutes = Int(elapsed) / 60
-        let seconds = Int(elapsed) % 60
-        let milliseconds = Int((elapsed.truncatingRemainder(dividingBy: 1)) * 100)
+        let minutes = Int(timerManager.elapsedTime) / 60
+        let seconds = Int(timerManager.elapsedTime) % 60
+        let milliseconds = Int((timerManager.elapsedTime.truncatingRemainder(dividingBy: 1)) * 100)
         return String(format: "%02d:%02d.%02d", minutes, seconds, milliseconds)
     }
     
@@ -136,7 +138,7 @@ struct TimerView: View {
                 ForEach(visibleSections, id: \.self) { section in
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Section \(section + 1)")
+                            Text(section == road.sections - 1 ? "Finish" : "Section \(section + 1)")
                                 .fontWeight(.bold)
                             if section < sectionSpeeds.count {
                                 Text("\(Int(sectionSpeeds[section].rounded())) mph")
@@ -171,8 +173,7 @@ struct TimerView: View {
         .navigationTitle(road.name)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
-//            setupLocationTracking()
-            startTimer()
+            setupLocationTracking()
         }
         .onDisappear {
             stopLocationTracking()
@@ -186,25 +187,45 @@ struct TimerView: View {
     }
     
     func saveResults() {
-        let sectionResultsData = sectionResults.map { tuple in
+        let sectionResultsData = zip(sectionTimes, sectionSpeeds).enumerated().map { index, data in
             RunResults.SectionResult(
-                section: tuple.section,
-                time: tuple.time,
-                speed: tuple.speed
+                section: index + 1,
+                time: data.0,
+                speed: data.1
             )
         }
         
         let results = RunResults(
             roadName: road.name,
             date: Date(),
-            totalTime: elapsedTime,
+            totalTime: timerManager.elapsedTime,
             sectionResults: sectionResultsData
         )
         
-        if let encoded = try? JSONEncoder().encode(results) {
-            UserDefaults.standard.set(encoded, forKey: "savedRuns-\(UUID().uuidString)")
+        // Create a unique file name for this run using date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+        let fileName = "run-\(road.name)-\(dateFormatter.string(from: Date())).json"
+        
+        // Get the URL for the Documents directory
+        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+            print("Failed to access the Documents directory.")
+            return
+        }
+        
+        let fileURL = documentsURL.appendingPathComponent(fileName)
+        
+        // Encode the results to JSON and write to file
+        do {
+            let encodedData = try JSONEncoder().encode(results)
+            try encodedData.write(to: fileURL)
+            print("Run saved to file: \(fileURL.path)")  // Debug print
+        } catch {
+            print("Failed to save run: \(error.localizedDescription)")
         }
     }
+
+
     
     func setupLocationTracking() {
         locationManager.delegate = locationDelegate
@@ -212,27 +233,32 @@ struct TimerView: View {
         locationManager.distanceFilter = 5
         locationManager.startUpdatingLocation()
         
-        locationDelegate.onLocationUpdate = { location in
-            userCoordinates.append(location.coordinate)
-            checkSectionCrossing(at: location.coordinate)
+        locationDelegate.onSectionCheck = { location in
+            if isRunning {
+                for (index, sectionEnd) in road.sectionEndCoordinates.enumerated() {
+                    let distance = location.coordinate.distance(to: sectionEnd)
+                    if distance < 10 && index == currentSection {
+                        let sectionTime = elapsedTime - sectionStartTime
+                        sectionTimes.append(sectionTime)
+                        sectionSpeeds.append(locationDelegate.currentSpeed)
+                        sectionStartTime = elapsedTime
+                        currentSection += 1
+                    }
+                }
+            }
         }
         
         locationDelegate.onStartCross = {
             startTimer()
             sectionStartTime = elapsedTime
-            currentSection = 0
         }
         
         locationDelegate.onFinishCross = {
             stopTimer()
-            // Save final section time
-            if currentSection < road.sectionEndCoordinates.count {
-                sectionTimes.append(elapsedTime - sectionStartTime)
-            }
-            
             showingSaveAlert = true
         }
     }
+
     
     func checkSectionCrossing(at coordinate: CLLocationCoordinate2D) {
         guard isRunning,
@@ -265,6 +291,8 @@ struct TimerView: View {
         locationManager.stopUpdatingLocation()
         stopTimer()
     }
+    
+    
 }
 
 extension CLLocationCoordinate2D {

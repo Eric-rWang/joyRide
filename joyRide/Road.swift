@@ -55,6 +55,26 @@ let roadData = [
              CLLocationCoordinate2D(latitude: 30.48737, longitude: -97.89067)
          ]
         ),
+    Road(headerImage: "cocos",
+         name: "Lime Creek @ Coco",
+         length: 9,
+         sections: 10,
+         jobTitle: "We Love Coco",
+         bestTime: Time(hours: 0, minutes: 15, seconds: 30),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.48500, longitude: -97.86798),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.44302, longitude: -97.91162),
+         sectionEndCoordinates: [
+            CLLocationCoordinate2D(latitude: 30.48737, longitude: -97.89067),
+            CLLocationCoordinate2D(latitude: 30.48011, longitude: -97.89749),
+            CLLocationCoordinate2D(latitude: 30.47311, longitude: -97.89813),
+            CLLocationCoordinate2D(latitude: 30.46766, longitude: -97.89760),
+            CLLocationCoordinate2D(latitude: 30.46912, longitude: -97.90534),
+            CLLocationCoordinate2D(latitude: 30.46035, longitude: -97.90595),
+            CLLocationCoordinate2D(latitude: 30.46045, longitude: -97.91274),
+            CLLocationCoordinate2D(latitude: 30.45488, longitude: -97.91363),
+            CLLocationCoordinate2D(latitude: 30.44950, longitude: -97.90467),
+         ]
+        ),
     Road(headerImage: "oldspicewood",
          name: "Old Spicewood",
          length: 3,
@@ -68,6 +88,21 @@ let roadData = [
              CLLocationCoordinate2D(latitude: 30.40672, longitude: -97.78990),
              CLLocationCoordinate2D(latitude: 30.39775, longitude: -97.78108),
              CLLocationCoordinate2D(latitude: 30.39089, longitude: -97.77590)
+         ]
+        ),
+    Road(headerImage: "oldspice360",
+         name: "Old Spicewood @ 360",
+         length: 3,
+         sections: 5,
+         jobTitle: "Short & Sweet",
+         bestTime: Time(hours: 0, minutes: 5, seconds: 45),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.38346, longitude: -97.77156),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.4218, longitude: -97.79456),
+         sectionEndCoordinates: [
+            CLLocationCoordinate2D(latitude: 30.39089, longitude: -97.77590),
+            CLLocationCoordinate2D(latitude: 30.39775, longitude: -97.78108),
+            CLLocationCoordinate2D(latitude: 30.40672, longitude: -97.78990),
+            CLLocationCoordinate2D(latitude: 30.413790, longitude: -97.79348)
          ]
         ),
     Road(headerImage: "home",
