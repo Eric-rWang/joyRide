@@ -19,6 +19,7 @@ struct Road: Identifiable {
     let headerImage: String
     let name: String
     let length: Int
+    let sections: Int
     let jobTitle: String
     let bestTime: Time
     let startCoordinate: CLLocationCoordinate2D
@@ -36,14 +37,16 @@ let roadData = [
     Road(headerImage: "limecreek",
          name: "Lime Creek",
          length: 9,
+         sections: 11,
          jobTitle: "Thrilling Twists & Turns",
          bestTime: Time(hours: 0, minutes: 15, seconds: 30),
          startCoordinate: CLLocationCoordinate2D(latitude: 30.44302, longitude: -97.91162),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.48984, longitude: -97.86139)
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.48500, longitude: -97.86798)
         ),
     Road(headerImage: "oldspicewood",
          name: "Old Spicewood",
          length: 3,
+         sections: 6,
          jobTitle: "Short & Sweet",
          bestTime: Time(hours: 0, minutes: 5, seconds: 45),
          startCoordinate: CLLocationCoordinate2D(latitude: 30.4218, longitude: -97.79456),

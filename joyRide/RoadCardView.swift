@@ -32,7 +32,7 @@ struct RoadCardView: View {
                                 blue: 0.95)
                             )
                         
-                        Text("· \(road.length) mi")
+                        Text("·  \(road.length) mi")
                             .font(.custom("MyCustomFont", size: 14))
                             .foregroundStyle(Color(
                                 red: 0.75,
@@ -87,4 +87,3 @@ struct RoadCardView_Previews: PreviewProvider {
             .padding()
     }
 }
-

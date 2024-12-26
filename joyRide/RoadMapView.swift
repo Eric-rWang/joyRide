@@ -51,16 +51,66 @@ struct RoadMapView: View {
                 .ignoresSafeArea(edges: [.horizontal])
                 
                 // Road information below the map
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(road.name)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    Text("Length: \(road.length) miles")
-                    Text(road.jobTitle)
+                VStack(spacing: 16) {
+                    // Road details
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(road.name)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color(
+                                red: 0.95,
+                                green: 0.95,
+                                blue: 0.95)
+                            )
+                        
+                        HStack {
+                            VStack(alignment: .leading, spacing: 8) {
+                                InfoRow(label: "Length", value: "\(road.length) miles")
+                                InfoRow(label: "Sections", value: "\(road.sections)")
+                                InfoRow(label: "Type", value: road.jobTitle)
+                            }
+                            
+                            Spacer()
+                            
+                            VStack(alignment: .trailing) {
+                                Text("Personal Best")
+                                    .font(.subheadline)
+                                    .foregroundStyle(Color(
+                                        red: 0.75,
+                                        green: 0.75,
+                                        blue: 0.75)
+                                    )
+                                Text(road.formattedBestTime)
+                                    .font(.title3)
+                                    .foregroundStyle(Color(
+                                        red: 0.95,
+                                        green: 0.95,
+                                        blue: 0.95)
+                                    )
+                            }
+                        }
+                    }
+                    .padding()
+                    .background(Color(red: 0.35, green: 0.40, blue: 0.40))
+                    .cornerRadius(14)
+                    
+                    Spacer()
+                    
+                    // Start Engine button
+                    NavigationLink(destination: Text("Timer Page")) {
+                        HStack {
+                            Image(systemName: "gauge.with.dots.needle.bottom")
+                            Text("START ENGINE")
+                        }
+                        .font(.headline)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(red: 0.94, green: 0.1, blue: 0.176))
+                        .cornerRadius(14)
+                    }
                 }
                 .padding()
-                
-                Spacer()
             }
         }
         .navigationTitle(road.name)
@@ -83,6 +133,29 @@ struct RoadMapView: View {
                     region = MKCoordinateRegion(rect)
                 }
             }
+        }
+    }
+}
+
+
+struct InfoRow: View {
+    let label: String
+    let value: String
+    
+    var body: some View {
+        HStack {
+            Text(label)
+                .foregroundStyle(Color(
+                    red: 0.85,
+                    green: 0.85,
+                    blue: 0.85)
+                )
+            Text(value)
+                .foregroundStyle(Color(
+                    red: 0.65,
+                    green: 0.65,
+                    blue: 0.65)
+                )
         }
     }
 }
