@@ -53,26 +53,26 @@ struct RoadCardView: View {
                 }
                 .padding()
                 
-                VStack {
-                    Text("Personal Best")
-                        .font(.custom("MyCustomFont", size: 16))
-                        .foregroundStyle(Color(
-                            red: 0.85,
-                            green: 0.85,
-                            blue: 0.85)
-                        )
-                        .padding(.horizontal)
-                    Text("\(road.formattedBestTime)")
-                        .font(.custom("MyCustomFont", size: 18))
-                        .foregroundStyle(Color(
-                            red: 0.85,
-                            green: 0.85,
-                            blue: 0.85)
-                        )
-                        .padding(.horizontal)
-                }
-                .frame(alignment: .topTrailing)
-                .padding()
+//                VStack {
+//                    Text("Personal Best")
+//                        .font(.custom("MyCustomFont", size: 16))
+//                        .foregroundStyle(Color(
+//                            red: 0.85,
+//                            green: 0.85,
+//                            blue: 0.85)
+//                        )
+//                        .padding(.horizontal)
+//                    Text("\(road.formattedBestTime)")
+//                        .font(.custom("MyCustomFont", size: 18))
+//                        .foregroundStyle(Color(
+//                            red: 0.85,
+//                            green: 0.85,
+//                            blue: 0.85)
+//                        )
+//                        .padding(.horizontal)
+//                }
+//                .frame(alignment: .topTrailing)
+//                .padding()
             }
         }
         .background(Color(red: 0.35, green: 0.40, blue: 0.40))

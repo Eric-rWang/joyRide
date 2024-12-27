@@ -72,22 +72,22 @@ struct RoadMapView: View {
                             
                             Spacer()
                             
-                            VStack(alignment: .trailing) {
-                                Text("Personal Best")
-                                    .font(.subheadline)
-                                    .foregroundStyle(Color(
-                                        red: 0.75,
-                                        green: 0.75,
-                                        blue: 0.75)
-                                    )
-                                Text(road.formattedBestTime)
-                                    .font(.title3)
-                                    .foregroundStyle(Color(
-                                        red: 0.95,
-                                        green: 0.95,
-                                        blue: 0.95)
-                                    )
-                            }
+//                            VStack(alignment: .trailing) {
+//                                Text("Personal Best")
+//                                    .font(.subheadline)
+//                                    .foregroundStyle(Color(
+//                                        red: 0.75,
+//                                        green: 0.75,
+//                                        blue: 0.75)
+//                                    )
+//                                Text(road.formattedBestTime)
+//                                    .font(.title3)
+//                                    .foregroundStyle(Color(
+//                                        red: 0.95,
+//                                        green: 0.95,
+//                                        blue: 0.95)
+//                                    )
+//                            }
                         }
                     }
                     .padding()
