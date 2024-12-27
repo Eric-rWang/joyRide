@@ -118,7 +118,7 @@ struct RoadMapView: View {
                                             .offset(y: 2)
                                     )
                             )
-                            .padding(.bottom, 30)
+                            .padding(.bottom, 40)
                     }
 
                 }

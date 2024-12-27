@@ -156,8 +156,10 @@ struct TimerView: View {
                 .font(.system(size: 80, weight: .medium, design: .monospaced))
                 .foregroundStyle(.white)
                 .padding(.vertical, 40)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity) // Ensures the text spans the entire available width
                 .background(Color(red: 0.18, green: 0.18, blue: 0.18))
+                .lineLimit(1) // Restrict text to one line
+                .minimumScaleFactor(0.5)
             
             // Section Times Table with matching background
             List {
