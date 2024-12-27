@@ -40,19 +40,19 @@ let roadData = [
          length: 9,
          sections: 10,
          jobTitle: "Thrilling Twists & Turns",
-         bestTime: Time(hours: 0, minutes: 15, seconds: 30),
-         startCoordinate: CLLocationCoordinate2D(latitude: 30.44302, longitude: -97.91162),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.48500, longitude: -97.86798),
+         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.443017252863697, longitude: -97.91160227837274),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.486051847008323, longitude: -97.86665165992635),
          sectionEndCoordinates: [
-            CLLocationCoordinate2D(latitude: 30.449509, longitude: -97.90467),
-             CLLocationCoordinate2D(latitude: 30.45488, longitude: -97.91363),
-             CLLocationCoordinate2D(latitude: 30.46045, longitude: -97.91274),
-             CLLocationCoordinate2D(latitude: 30.46035, longitude: -97.90595),
-             CLLocationCoordinate2D(latitude: 30.46912, longitude: -97.90534),
-             CLLocationCoordinate2D(latitude: 30.46766, longitude: -97.89760),
-             CLLocationCoordinate2D(latitude: 30.47311, longitude: -97.89813),
-             CLLocationCoordinate2D(latitude: 30.48011, longitude: -97.89749),
-             CLLocationCoordinate2D(latitude: 30.48737, longitude: -97.89067)
+            CLLocationCoordinate2D(latitude: 30.44950469042202, longitude: -97.90467473741548),
+            CLLocationCoordinate2D(latitude: 30.454876207999508, longitude: -97.91363459367729),
+            CLLocationCoordinate2D(latitude: 30.460462019779193, longitude: -97.91279002348332),
+            CLLocationCoordinate2D(latitude: 30.460419282011557, longitude: -97.90597786120328),
+            CLLocationCoordinate2D(latitude: 30.469230588743617, longitude: -97.905635311562),
+            CLLocationCoordinate2D(latitude: 30.46769827061085, longitude: -97.89769995888017),
+            CLLocationCoordinate2D(latitude: 30.473089323895717, longitude: -97.89812364903021),
+            CLLocationCoordinate2D(latitude: 30.480166634312198, longitude: -97.89750495040339),
+            CLLocationCoordinate2D(latitude: 30.487481350005233, longitude: -97.89068932580112)
          ]
         ),
     Road(headerImage: "cocos",
@@ -60,19 +60,19 @@ let roadData = [
          length: 9,
          sections: 10,
          jobTitle: "We Love Coco",
-         bestTime: Time(hours: 0, minutes: 15, seconds: 30),
-         startCoordinate: CLLocationCoordinate2D(latitude: 30.48500, longitude: -97.86798),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.44302, longitude: -97.91162),
+         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.486051847008323, longitude: -97.86665165992635),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.443017252863697, longitude: -97.91160227837274),
          sectionEndCoordinates: [
-            CLLocationCoordinate2D(latitude: 30.48737, longitude: -97.89067),
-            CLLocationCoordinate2D(latitude: 30.48011, longitude: -97.89749),
-            CLLocationCoordinate2D(latitude: 30.47311, longitude: -97.89813),
-            CLLocationCoordinate2D(latitude: 30.46766, longitude: -97.89760),
-            CLLocationCoordinate2D(latitude: 30.46912, longitude: -97.90534),
-            CLLocationCoordinate2D(latitude: 30.46035, longitude: -97.90595),
-            CLLocationCoordinate2D(latitude: 30.46045, longitude: -97.91274),
-            CLLocationCoordinate2D(latitude: 30.45488, longitude: -97.91363),
-            CLLocationCoordinate2D(latitude: 30.44950, longitude: -97.90467),
+            CLLocationCoordinate2D(latitude: 30.487481350005233, longitude: -97.89068932580112),
+            CLLocationCoordinate2D(latitude: 30.480166634312198, longitude: -97.89750495040339),
+            CLLocationCoordinate2D(latitude: 30.473089323895717, longitude: -97.89812364903021),
+            CLLocationCoordinate2D(latitude: 30.46769827061085, longitude: -97.89769995888017),
+            CLLocationCoordinate2D(latitude: 30.469230588743617, longitude: -97.905635311562),
+            CLLocationCoordinate2D(latitude: 30.460419282011557, longitude: -97.90597786120328),
+            CLLocationCoordinate2D(latitude: 30.460462019779193, longitude: -97.91279002348332),
+            CLLocationCoordinate2D(latitude: 30.454876207999508, longitude: -97.91363459367729),
+            CLLocationCoordinate2D(latitude: 30.44950469042202, longitude: -97.90467473741548),
          ]
         ),
     Road(headerImage: "oldspicewood",
@@ -80,14 +80,14 @@ let roadData = [
          length: 3,
          sections: 5,
          jobTitle: "Short & Sweet",
-         bestTime: Time(hours: 0, minutes: 5, seconds: 45),
-         startCoordinate: CLLocationCoordinate2D(latitude: 30.4218, longitude: -97.79456),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.38346, longitude: -97.77156),
+         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.421536354097064, longitude: -97.79429454428325),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.38386541720474, longitude: -97.77144110042585),
          sectionEndCoordinates: [
-            CLLocationCoordinate2D(latitude: 30.413790, longitude: -97.79348),
-             CLLocationCoordinate2D(latitude: 30.40672, longitude: -97.78990),
-             CLLocationCoordinate2D(latitude: 30.39775, longitude: -97.78108),
-             CLLocationCoordinate2D(latitude: 30.39089, longitude: -97.77590)
+            CLLocationCoordinate2D(latitude: 30.41383482975752, longitude: -97.79344216792988),
+            CLLocationCoordinate2D(latitude: 30.406658697932862, longitude: -97.7899615053321),
+            CLLocationCoordinate2D(latitude: 30.397814990863033, longitude: -97.78104747714116),
+            CLLocationCoordinate2D(latitude: 30.390918252720322, longitude: -97.7758966566319)
          ]
         ),
     Road(headerImage: "oldspice360",
@@ -95,27 +95,27 @@ let roadData = [
          length: 3,
          sections: 5,
          jobTitle: "Short & Sweet",
-         bestTime: Time(hours: 0, minutes: 5, seconds: 45),
-         startCoordinate: CLLocationCoordinate2D(latitude: 30.38346, longitude: -97.77156),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.4218, longitude: -97.79456),
+         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.38386541720474, longitude: -97.77144110042585),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.421536354097064, longitude: -97.79429454428325),
          sectionEndCoordinates: [
-            CLLocationCoordinate2D(latitude: 30.39089, longitude: -97.77590),
-            CLLocationCoordinate2D(latitude: 30.39775, longitude: -97.78108),
-            CLLocationCoordinate2D(latitude: 30.40672, longitude: -97.78990),
-            CLLocationCoordinate2D(latitude: 30.413790, longitude: -97.79348)
+            CLLocationCoordinate2D(latitude: 30.390918252720322, longitude: -97.7758966566319),
+            CLLocationCoordinate2D(latitude: 30.397814990863033, longitude: -97.78104747714116),
+            CLLocationCoordinate2D(latitude: 30.406658697932862, longitude: -97.7899615053321),
+            CLLocationCoordinate2D(latitude: 30.41383482975752, longitude: -97.79344216792988),
          ]
         ),
-    Road(headerImage: "home",
-         name: "Home",
-         length: 1,
-         sections: 3,
-         jobTitle: "Just for Testing",
-         bestTime: Time(hours: 0, minutes: 1, seconds: 0),
-         startCoordinate: CLLocationCoordinate2D(latitude: 30.43558, longitude: -97.82297),
-         endCoordinate: CLLocationCoordinate2D(latitude: 30.43671, longitude: -97.82215),
-         sectionEndCoordinates: [
-            CLLocationCoordinate2D(latitude: 30.43555, longitude: -97.82251),
-            CLLocationCoordinate2D(latitude: 30.43626, longitude: -97.82230)
-         ]
-        )
+//    Road(headerImage: "home",
+//         name: "Home",
+//         length: 1,
+//         sections: 3,
+//         jobTitle: "Just for Testing",
+//         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+//         startCoordinate: CLLocationCoordinate2D(latitude: 30.43666, longitude: -97.82132),
+//         endCoordinate: CLLocationCoordinate2D(latitude: 30.43324, longitude: -97.81825),
+//         sectionEndCoordinates: [
+//            CLLocationCoordinate2D(latitude: 30.43696, longitude: -97.81761),
+//            CLLocationCoordinate2D(latitude: 30.43481, longitude: -97.81681)
+//         ]
+//        )
 ]

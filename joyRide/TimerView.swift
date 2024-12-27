@@ -8,6 +8,7 @@
 import SwiftUI
 import MapKit
 import CoreLocation
+import UniformTypeIdentifiers
 
 class LocationDelegate: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var onLocationUpdate: ((CLLocation) -> Void)?
@@ -85,6 +86,29 @@ struct RunResults: Codable {
     }
 }
 
+struct TextFile: FileDocument {
+    static var readableContentTypes = [UTType.plainText]
+    var text: String
+    
+    init(initialText: String = "") {
+        text = initialText
+    }
+    
+    init(configuration: ReadConfiguration) throws {
+        if let data = configuration.file.regularFileContents {
+            text = String(decoding: data, as: UTF8.self)
+        } else {
+            text = ""
+        }
+    }
+    
+    func fileWrapper(configuration: WriteConfiguration) throws -> FileWrapper {
+        let data = Data(text.utf8)
+        return FileWrapper(regularFileWithContents: data)
+    }
+}
+
+
 struct TimerView: View {
     let road: Road
     @StateObject private var locationDelegate: LocationDelegate
@@ -101,6 +125,8 @@ struct TimerView: View {
     @State private var sectionSpeeds: [Double] = []
     @State private var showingSaveAlert = false
     @State private var sectionResults: [(section: Int, time: Double, speed: Double)] = []
+    @State private var isExporting = false
+    @State private var runDataToExport: RunResults?
     
     init(road: Road) {
         self.road = road
@@ -180,52 +206,58 @@ struct TimerView: View {
         }
         .alert("Save Run Results?", isPresented: $showingSaveAlert) {
             Button("Save") {
-                saveResults()
+                isExporting = true
             }
             Button("Discard", role: .cancel) { }
         }
+        .fileExporter(
+            isPresented: $isExporting,
+            document: createTextDocument(),
+            contentType: .plainText,
+            defaultFilename: sanitizeFilename("\(road.name)-\(Date().formatted(date: .numeric, time: .shortened))")
+        ) { result in
+            switch result {
+            case .success(let url):
+                print("Saved to \(url)")
+            case .failure(let error):
+                print("Error saving file: \(error.localizedDescription)")
+            }
+        }
+        
+//        Button("Test Save") {
+//            // Create sample data
+//            sectionTimes = [45.23, 62.45, 38.91]
+//            sectionSpeeds = [65.4, 72.1, 68.3]
+//            timerManager.elapsedTime = 146.59
+//            currentSection = sectionTimes.count // Set current section to match data
+//            showingSaveAlert = true
+//        }
+//        .padding()
+
     }
     
-    func saveResults() {
-        let sectionResultsData = zip(sectionTimes, sectionSpeeds).enumerated().map { index, data in
-            RunResults.SectionResult(
-                section: index + 1,
-                time: data.0,
-                speed: data.1
-            )
+    func prepareRunDataString() -> String {
+        var output = "Run Results for \(road.name)\n"
+        output += "Date: \(Date().formatted())\n"
+        output += "Total Time: \(formattedTime)\n\n"
+        
+        // Add section results
+        for (index, (time, speed)) in zip(sectionTimes, sectionSpeeds).enumerated() {
+            output += "Section \(index + 1):\n"
+            output += String(format: "  Time: %02d:%02d.%02d\n",
+                Int(time) / 60,
+                Int(time) % 60,
+                Int((time.truncatingRemainder(dividingBy: 1)) * 100))
+            output += "  Speed: \(Int(speed.rounded())) mph\n\n"
         }
         
-        let results = RunResults(
-            roadName: road.name,
-            date: Date(),
-            totalTime: timerManager.elapsedTime,
-            sectionResults: sectionResultsData
-        )
-        
-        // Create a unique file name for this run using date
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
-        let fileName = "run-\(road.name)-\(dateFormatter.string(from: Date())).json"
-        
-        // Get the URL for the Documents directory
-        guard let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            print("Failed to access the Documents directory.")
-            return
-        }
-        
-        let fileURL = documentsURL.appendingPathComponent(fileName)
-        
-        // Encode the results to JSON and write to file
-        do {
-            let encodedData = try JSONEncoder().encode(results)
-            try encodedData.write(to: fileURL)
-            print("Run saved to file: \(fileURL.path)")  // Debug print
-        } catch {
-            print("Failed to save run: \(error.localizedDescription)")
-        }
+        return output
     }
-
-
+    
+    func createTextDocument() -> TextFile {
+        let text = prepareRunDataString()
+        return TextFile(initialText: text)
+    }
     
     func setupLocationTracking() {
         locationManager.delegate = locationDelegate
@@ -238,10 +270,11 @@ struct TimerView: View {
                 for (index, sectionEnd) in road.sectionEndCoordinates.enumerated() {
                     let distance = location.coordinate.distance(to: sectionEnd)
                     if distance < 10 && index == currentSection {
-                        let sectionTime = elapsedTime - sectionStartTime
+                        // Use timerManager.elapsedTime instead of elapsedTime
+                        let sectionTime = timerManager.elapsedTime - sectionStartTime
                         sectionTimes.append(sectionTime)
                         sectionSpeeds.append(locationDelegate.currentSpeed)
-                        sectionStartTime = elapsedTime
+                        sectionStartTime = timerManager.elapsedTime
                         currentSection += 1
                     }
                 }
@@ -249,16 +282,27 @@ struct TimerView: View {
         }
         
         locationDelegate.onStartCross = {
-            startTimer()
-            sectionStartTime = elapsedTime
+            if !isRunning {
+                startTimer()
+                sectionStartTime = timerManager.elapsedTime
+            }
         }
         
         locationDelegate.onFinishCross = {
-            stopTimer()
-            showingSaveAlert = true
+            // Record the final section time
+            if isRunning {
+                let finalTime = timerManager.elapsedTime - sectionStartTime
+                sectionTimes.append(finalTime)
+                sectionSpeeds.append(locationDelegate.currentSpeed)
+                stopTimer() // Stop the timer
+                
+                // Delay showing save alert to ensure UI is ready
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    showingSaveAlert = true
+                }
+            }
         }
     }
-
     
     func checkSectionCrossing(at coordinate: CLLocationCoordinate2D) {
         guard isRunning,
@@ -290,6 +334,11 @@ struct TimerView: View {
     func stopLocationTracking() {
         locationManager.stopUpdatingLocation()
         stopTimer()
+    }
+    
+    func sanitizeFilename(_ name: String) -> String {
+        let invalidCharacters = CharacterSet(charactersIn: "/\\?%*|\"<>")
+        return name.components(separatedBy: invalidCharacters).joined(separator: "-")
     }
     
     
