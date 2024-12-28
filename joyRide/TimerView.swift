@@ -37,7 +37,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate, ObservableObject {
             
             // Start line check
             let startDistance = location.coordinate.distance(to: startCoordinate)
-            if startDistance < 10 {
+            if startDistance < 15 {
                 onStartCross?()
             }
             
@@ -46,7 +46,7 @@ class LocationDelegate: NSObject, CLLocationManagerDelegate, ObservableObject {
             
             // Finish line check
             let finishDistance = location.coordinate.distance(to: endCoordinate)
-            if finishDistance < 10 {
+            if finishDistance < 15 {
                 onFinishCross?()
         }
     }
@@ -263,15 +263,18 @@ struct TimerView: View {
     
     func setupLocationTracking() {
         locationManager.delegate = locationDelegate
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 5
+        locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+        locationManager.distanceFilter = 0.5
+        locationManager.activityType = .automotiveNavigation
+//        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
+        
         
         locationDelegate.onSectionCheck = { location in
             if isRunning {
                 for (index, sectionEnd) in road.sectionEndCoordinates.enumerated() {
                     let distance = location.coordinate.distance(to: sectionEnd)
-                    if distance < 10 && index == currentSection {
+                    if distance < 25 && index == currentSection {
                         // Use timerManager.elapsedTime instead of elapsedTime
                         let sectionTime = timerManager.elapsedTime - sectionStartTime
                         sectionTimes.append(sectionTime)
@@ -306,22 +309,22 @@ struct TimerView: View {
         }
     }
     
-    func checkSectionCrossing(at coordinate: CLLocationCoordinate2D) {
-        guard isRunning,
-              currentSection < road.sectionEndCoordinates.count else { return }
-        
-        let sectionEnd = road.sectionEndCoordinates[currentSection]
-        let distance = coordinate.distance(to: sectionEnd)
-        
-        if distance < 10 { // 10 meters threshold
-            // Save section time
-            sectionTimes.append(elapsedTime - sectionStartTime)
-            sectionStartTime = elapsedTime
-            
-            // Move to next section
-            currentSection += 1
-        }
-    }
+//    func checkSectionCrossing(at coordinate: CLLocationCoordinate2D) {
+//        guard isRunning,
+//              currentSection < road.sectionEndCoordinates.count else { return }
+//        
+//        let sectionEnd = road.sectionEndCoordinates[currentSection]
+//        let distance = coordinate.distance(to: sectionEnd)
+//        
+//        if distance < 25 { // 10 meters threshold
+//            // Save section time
+//            sectionTimes.append(elapsedTime - sectionStartTime)
+//            sectionStartTime = elapsedTime
+//            
+//            // Move to next section
+//            currentSection += 1
+//        }
+//    }
     
     func startTimer() {
         isRunning = true

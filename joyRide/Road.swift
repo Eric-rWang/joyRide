@@ -105,17 +105,17 @@ let roadData = [
             CLLocationCoordinate2D(latitude: 30.41383482975752, longitude: -97.79344216792988),
          ]
         ),
-//    Road(headerImage: "home",
-//         name: "Home",
-//         length: 1,
-//         sections: 3,
-//         jobTitle: "Just for Testing",
-//         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
-//         startCoordinate: CLLocationCoordinate2D(latitude: 30.43666, longitude: -97.82132),
-//         endCoordinate: CLLocationCoordinate2D(latitude: 30.43324, longitude: -97.81825),
-//         sectionEndCoordinates: [
-//            CLLocationCoordinate2D(latitude: 30.43696, longitude: -97.81761),
-//            CLLocationCoordinate2D(latitude: 30.43481, longitude: -97.81681)
-//         ]
-//        )
+    Road(headerImage: "home",
+         name: "Home",
+         length: 1,
+         sections: 3,
+         jobTitle: "Just for Testing",
+         bestTime: Time(hours: 0, minutes: 0, seconds: 0),
+         startCoordinate: CLLocationCoordinate2D(latitude: 30.43666, longitude: -97.82132),
+         endCoordinate: CLLocationCoordinate2D(latitude: 30.43324, longitude: -97.81825),
+         sectionEndCoordinates: [
+            CLLocationCoordinate2D(latitude: 30.43696, longitude: -97.81761),
+            CLLocationCoordinate2D(latitude: 30.43481, longitude: -97.81681)
+         ]
+        )
 ]

@@ -28,25 +28,39 @@ struct RoadMapView: View {
                 // Map view at the top
                 Map {
                     if let route = route {
-                        MapPolyline(route.polyline)
-                            .stroke(.blue, lineWidth: 5)
+                            MapPolyline(route.polyline)
+                                .stroke(.blue, lineWidth: 5)
+                        }
+                        // Start marker with checkered flag
+                        Annotation("Start", coordinate: road.startCoordinate) {
+                            Image(systemName: "flag.checkered")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundStyle(.black)
+                        }
+                        
+                        // Section markers
+                        ForEach(Array(road.sectionEndCoordinates.enumerated()), id: \.element.latitude) { index, coordinate in
+                            Annotation("Split \(index + 1)", coordinate: coordinate) {
+                                Circle()
+                                    .fill(.gray.opacity(0.8))
+                                    .frame(width: 12, height: 12)
+                                    .overlay(
+                                        Text("\(index + 1)")
+                                            .font(.caption2)
+                                            .foregroundStyle(.white)
+                                    )
+                            }
+                        }
+                        
+                        // Finish marker with checkered flag
+                        Annotation("Finish", coordinate: road.endCoordinate) {
+                            Image(systemName: "flag.checkered")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundStyle(.black)
+                        }
                     }
-                    // Start marker with checkered flag
-                    Annotation("Start", coordinate: road.startCoordinate) {
-                        Image(systemName: "flag.checkered")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(.black)
-                    }
-                    
-                    // Finish marker with checkered flag
-                    Annotation("Finish", coordinate: road.endCoordinate) {
-                        Image(systemName: "flag.checkered")
-                            .resizable()
-                            .frame(width: 30, height: 30)
-                            .foregroundStyle(.black)
-                    }
-                }
                 .frame(height: geometry.size.height * 0.6) // Larger portion for the map
                 .ignoresSafeArea(edges: [.horizontal])
                 

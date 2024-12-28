@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>TrackMate.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>buildNumber</key>
+			<string>1</string>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>CADDC002410D28B7F08824F8AAEA03837D20E580</string>
+				<key>dateExpires</key>
+				<string>12/27/25</string>
+				<key>type</key>
+				<string>Cloud Managed Apple Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>S5Z539Z82G.Wang.joyRide</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>S5Z539Z82G</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>TrackMate.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>3339373e-4396-425d-a773-31ea880c4494</string>
+				<key>dateExpires</key>
+				<string>12/27/25</string>
+				<key>name</key>
+				<string>iOS Team Ad Hoc Provisioning Profile: Wang.joyRide</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>S5Z539Z82G</string>
+				<key>name</key>
+				<string>Eric Wang</string>
+			</dict>
+			<key>versionNumber</key>
+			<string>1.0</string>
+		</dict>
+	</array>
+</dict>
+</plist>
